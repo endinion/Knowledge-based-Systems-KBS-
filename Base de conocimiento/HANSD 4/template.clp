@@ -1,0 +1,5 @@
+(deftemplate mono-pos (slot lugar))
+(deftemplate caja-pos (slot lugar))
+(deftemplate banana-pos (slot lugar))
+(deftemplate mono-altura (slot nivel))
+(deftemplate tiene-banana (slot valor))
