@@ -22,7 +22,7 @@
               " antes: " ?e ", ahora: " (- ?e ?c) crlf)
   (retract ?o))
 
-; 4) Computadora  (← aquí va ?m)
+; 4) Computadora 
 (defrule descontar-inv-computadora
   (declare (salience -50))
   ?o <- (orden (orden-id ?oid) (producto-id ?id) (cantidad ?c))
@@ -61,7 +61,7 @@
   (printout t "[CLASIF] Cliente " ?cid " -> MENUDISTA (cantidad " ?qty ")" crlf)
 )
 
-; 8) Banamex + iPhone (respeta tus símbolos tal como los pusiste)
+; 8) Banamex + iPhone
 (defrule banamex-iphone
   (orden (cliente-id ?cid) (producto-id ?pid) (forma-pago tarjeta))
   (smartphone (producto-id ?pid) (marca apple))
@@ -71,7 +71,7 @@
      " - iPhone/Apple: 12 MSI con tarjeta Banamex." crlf)
 )
 
-; 9) Accesorio 50% misma marca (sin auxiliares; genera vale)
+; 9) Accesorio 50% misma marca 
 (defrule descuento-accesorio-50-misma-marca
   (declare (salience 5))
   (orden (orden-id ?oid) (cliente-id ?cid) (producto-id ?id1))
@@ -88,7 +88,7 @@
             ": accesorio al 50%." crlf)
 )
 
-; 10) Vale $500 por subtotal alto (sin auxiliares; genera vale)
+; 10) Vale $500 por subtotal alto 
 (defrule vale-subtotal-alto-500
   (orden (orden-id ?oid) (cliente-id ?cid) (producto-id ?pid) (cantidad ?c))
   (or (smartphone (producto-id ?pid) (precio ?p))
@@ -101,7 +101,7 @@
             " - Subtotal " (* ?p ?c) " ≥ 20000 → vale $500." crlf)
 )
 
-; 11) Aviso de vales por cliente (mantengo tu lógica de %/$)
+; 11) Aviso de vales por cliente 
 (defrule aviso-vales-cliente
   (cliente (cliente-id ?cid) (nombre $?nombre))
   (vale (cliente-id ?cid) (vale-id ?vid) (tipo ?t) (descuento ?d))
@@ -112,7 +112,7 @@
              (if (eq ?t porcentaje) then "%" else "$") crlf)
 )
 
-; 12) Accesorio 5 o más iguales → 40% (sin funcion externa; genera vale)
+; 12) Accesorio 5 o más iguales → 40% 
 (defrule desc-40-accesorio-5-iguales
   (declare (salience 30))
   (orden (orden-id ?oid) (cliente-id ?cid) (producto-id ?pid) (cantidad ?q&:(>= ?q 5)))
@@ -153,7 +153,7 @@
 )
 
 
-; 16) Xiaomi + BBVA → 10% (pago con tarjeta)
+; 16) Xiaomi + BBVA → 10% 
 (defrule desc-xiaomi-bbva-10
   (declare (salience 50))
   (orden (orden-id ?oid) (cliente-id ?cid) (producto-id ?pid) (forma-pago tarjeta))
@@ -163,7 +163,7 @@
   (crear-vale ?cid porcentaje-10 10)
   (printout t "[PROMO] Orden " ?oid " - Xiaomi + BBVA → 10% de descuento (vale emitido)." crlf))
 
-; 17) Motorola + HSBC → 15% (pago con tarjeta)
+; 17) Motorola + HSBC → 15% 
 (defrule desc-motorola-hsbc-15
   (declare (salience 50))
   (orden (orden-id ?oid) (cliente-id ?cid) (producto-id ?pid) (forma-pago tarjeta))
